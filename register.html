@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan2Cook – Registrieren</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --blue-light: #eff6ff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --red: #ef4444;
+      --green: #22c55e;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Left panel */
+    .left-panel {
+      background: var(--blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -100px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 56px;
+      position: relative; z-index: 1;
+    }
+
+    .brand span { opacity: 0.6; }
+
+    .left-tagline {
+      font-size: 2.6rem;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+
+    .left-tagline strong { font-weight: 600; }
+
+    .left-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      max-width: 340px;
+      position: relative; z-index: 1;
+    }
+
+    .feature-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 48px;
+      position: relative; z-index: 1;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      color: #fff;
+      width: fit-content;
+    }
+
+    .pill-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      flex-shrink: 0;
+    }
+
+    /* Right panel */
+    .right-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      background: var(--white);
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .form-header {
+      margin-bottom: 40px;
+    }
+
+    .form-header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .form-header p a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+
+    input.error-input {
+      border-color: var(--red);
+    }
+
+    .field-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    .field-error {
+      font-size: 0.8rem;
+      color: var(--red);
+      margin-top: 5px;
+      display: none;
+    }
+
+    .pw-wrapper {
+      position: relative;
+    }
+
+    .pw-toggle {
+      position: absolute;
+      right: 12px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 18px;
+      padding: 4px;
+      line-height: 1;
+    }
+
+    .strength-bar {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s, background 0.3s;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 13px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.97rem;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, opacity 0.2s;
+      letter-spacing: 0.01em;
+      margin-top: 4px;
+    }
+
+    .btn-primary:hover:not(:disabled) { background: var(--blue-dark); }
+    .btn-primary:active:not(:disabled) { transform: scale(0.99); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .status-msg {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      display: none;
+    }
+
+    .status-msg.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+
+    .terms {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    .terms a { color: var(--blue); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .right-panel { padding: 40px 24px; min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="left-panel">
+  <div class="brand">Scan2<span>Cook</span></div>
+  <div class="left-tagline">Kochen mit dem,<br><strong>was du hast.</strong></div>
+  <p class="left-sub">Scanne Barcodes oder tippe Zutaten ein — Scan2Cook schlägt dir passende Rezepte für deinen Kühlschrank vor.</p>
+  <div class="feature-pills">
+    <div class="pill"><span class="pill-dot"></span>Barcode-Scanner für Zutaten</div>
+    <div class="pill"><span class="pill-dot"></span>Personalisierter Rezept-Feed</div>
+    <div class="pill"><span class="pill-dot"></span>Wochenplanung & Einkaufsliste</div>
+  </div>
+</div>
+
+<div class="right-panel">
+  <div class="form-container">
+    <div class="form-header">
+      <h1>Konto erstellen</h1>
+      <p>Bereits registriert? <a href="login.html">Anmelden</a></p>
+    </div>
+
+    <div class="field">
+      <label for="name">Vollständiger Name</label>
+      <input type="text" id="name" placeholder="Max Mustermann" autocomplete="name" />
+      <div class="field-error" id="name-error">Bitte gib deinen Namen ein.</div>
+    </div>
+
+    <div class="field">
+      <label for="email">E-Mail-Adresse</label>
+      <input type="email" id="email" placeholder="max@beispiel.de" autocomplete="email" />
+      <div class="field-error" id="email-error">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+    </div>
+
+    <div class="field">
+      <label for="password">Passwort</label>
+      <div class="pw-wrapper">
+        <input type="password" id="password" placeholder="Mindestens 8 Zeichen" autocomplete="new-password" oninput="checkStrength(this.value)" />
+        <button class="pw-toggle" type="button" onclick="togglePw('password', this)" aria-label="Passwort anzeigen">👁</button>
+      </div>
+      <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+      <div class="field-hint" id="strength-label">Passwort-Stärke</div>
+      <div class="field-error" id="pw-error">Passwort muss mindestens 8 Zeichen haben.</div>
+    </div>
+
+    <div class="field">
+      <label for="password2">Passwort bestätigen</label>
+      <div class="pw-wrapper">
+        <input type="password" id="password2" placeholder="Passwort wiederholen" autocomplete="new-password" />
+        <button class="pw-toggle" type="button" onclick="togglePw('password2', this)" aria-label="Passwort anzeigen">👁</button>
+      </div>
+      <div class="field-error" id="pw2-error">Passwörter stimmen nicht überein.</div>
+    </div>
+
+    <button class="btn-primary" id="submit-btn" onclick="register()">Kostenlos registrieren</button>
+
+    <div class="status-msg" id="status-msg"></div>
+
+    <p class="terms">Mit der Registrierung stimmst du unseren <a href="#">Nutzungsbedingungen</a> und der <a href="#">Datenschutzerklärung</a> zu.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL  = 'https://ohxdromccjjlpjnnkrvf.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_kAPbpJ2MAD3kSnYXx-eQNQ_7gcR_H87';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  function togglePw(id, btn) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+  }
+
+  function checkStrength(pw) {
+    const fill = document.getElementById('strength-fill');
+    const label = document.getElementById('strength-label');
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    const pct = (score / 4) * 100;
+    const colors = ['', '#ef4444', '#f97316', '#eab308', '#22c55e'];
+    const labels = ['', 'Schwach', 'Mittel', 'Gut', 'Stark'];
+    fill.style.width = pct + '%';
+    fill.style.background = colors[score] || '#e2e8f0';
+    label.textContent = pw.length ? 'Stärke: ' + (labels[score] || '') : 'Passwort-Stärke';
+  }
+
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg || el.textContent;
+    el.style.display = 'block';
+  }
+
+  function clearErrors() {
+    ['name-error','email-error','pw-error','pw2-error'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    ['name','email','password','password2'].forEach(id => {
+      document.getElementById(id).classList.remove('error-input');
+    });
+    const sm = document.getElementById('status-msg');
+    sm.className = 'status-msg';
+    sm.textContent = '';
+  }
+
+  async function register() {
+    clearErrors();
+    const name  = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const pw    = document.getElementById('password').value;
+    const pw2   = document.getElementById('password2').value;
+    let valid = true;
+
+    if (!name) { showErr('name-error'); document.getElementById('name').classList.add('error-input'); valid = false; }
+    if (!email || !email.includes('@')) { showErr('email-error'); document.getElementById('email').classList.add('error-input'); valid = false; }
+    if (pw.length < 8) { showErr('pw-error'); document.getElementById('password').classList.add('error-input'); valid = false; }
+    if (pw !== pw2) { showErr('pw2-error'); document.getElementById('password2').classList.add('error-input'); valid = false; }
+    if (!valid) return;
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Wird registriert …';
+
+    const { error } = await sb.auth.signUp({
+      email, password: pw,
+      options: {
+        data: { full_name: name },
+        emailRedirectTo: window.location.origin + '/confirm.html'
+      }
+    });
+
+    btn.disabled = false;
+    btn.textContent = 'Kostenlos registrieren';
+
+    if (error) {
+      const sm = document.getElementById('status-msg');
+      sm.textContent = error.message;
+      sm.className = 'status-msg error';
+    } else {
+      sessionStorage.setItem('reg_email', email);
+      window.location.href = 'verify.html';
+    }
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') register(); });
+</script>
+
+</body>
+</html>

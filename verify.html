@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan2Cook – E-Mail bestätigen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --blue-light: #eff6ff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 56px 48px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--text);
+      margin-bottom: 44px;
+      letter-spacing: -0.3px;
+    }
+
+    .logo span { color: var(--blue); }
+
+    /* Animated envelope */
+    .envelope-wrap {
+      width: 80px; height: 80px;
+      background: var(--blue-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .envelope-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--blue);
+      opacity: 0;
+      animation: ripple 2s ease-out infinite;
+    }
+
+    @keyframes ripple {
+      0%   { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    .envelope-icon {
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+      margin-bottom: 14px;
+    }
+
+    .email-badge {
+      display: inline-block;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      border: 1px solid #bfdbfe;
+    }
+
+    p {
+      font-size: 0.97rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 360px;
+      margin: 0 auto 32px;
+    }
+
+    /* Steps */
+    .steps {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 0;
+    }
+
+    .step + .step {
+      border-top: 1px solid var(--border);
+    }
+
+    .step-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .step-text strong { font-weight: 500; }
+
+    /* Resend section */
+    .resend-area {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .btn-resend {
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-top: 12px;
+    }
+
+    .btn-resend:hover:not(:disabled) {
+      border-color: var(--blue);
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .btn-resend:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .countdown {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 28px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    .status-ok {
+      display: none;
+      padding: 12px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      color: #16a34a;
+      font-size: 0.875rem;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">Scan2<span>Cook</span></div>
+
+  <div class="envelope-wrap">
+    <span class="envelope-icon">✉️</span>
+  </div>
+
+  <h1>E-Mail bestätigen</h1>
+  <div class="email-badge" id="email-display">deine@email.de</div>
+  <p>Wir haben dir einen Bestätigungslink geschickt. Klicke darauf, um deine Registrierung abzuschließen.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Posteingang öffnen</strong> — suche nach einer E-Mail von Scan2Cook</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Link anklicken</strong> — „Jetzt Registrieren" im E-Mail-Body</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Fertig</strong> — du wirst direkt zu deinem Dashboard weitergeleitet</div>
+    </div>
+  </div>
+
+  <div class="resend-area">
+    <p style="margin-bottom: 4px; font-size:0.875rem; color:var(--text-muted);">Keine E-Mail erhalten?</p>
+    <button class="btn-resend" id="resend-btn" onclick="resend()">E-Mail erneut senden</button>
+    <div class="status-ok" id="resend-ok">✓ E-Mail wurde erneut gesendet!</div>
+    <div class="countdown" id="countdown"></div>
+  </div>
+
+  <a href="register.html" class="back-link">← Zurück zur Registrierung</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL  = 'https://ohxdromccjjlpjnnkrvf.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_kAPbpJ2MAD3kSnYXx-eQNQ_7gcR_H87';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  const email = sessionStorage.getItem('reg_email') || '';
+  if (email) document.getElementById('email-display').textContent = email;
+
+  let cooldown = 0;
+
+  async function resend() {
+    if (!email || cooldown > 0) return;
+    const btn = document.getElementById('resend-btn');
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet …';
+
+    const { error } = await sb.auth.resend({ type: 'signup', email });
+
+    btn.textContent = 'E-Mail erneut senden';
+
+    if (!error) {
+      document.getElementById('resend-ok').style.display = 'block';
+      startCooldown();
+    } else {
+      alert(error.message);
+      btn.disabled = false;
+    }
+  }
+
+  function startCooldown() {
+    cooldown = 60;
+    const btn = document.getElementById('resend-btn');
+    const cd  = document.getElementById('countdown');
+    btn.disabled = true;
+    const t = setInterval(() => {
+      cooldown--;
+      cd.textContent = `Erneut senden in ${cooldown}s`;
+      if (cooldown <= 0) {
+        clearInterval(t);
+        btn.disabled = false;
+        cd.textContent = '';
+        document.getElementById('resend-ok').style.display = 'none';
+      }
+    }, 1000);
+  }
+
+  // Auto-detect if user comes back after confirming
+  sb.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      window.location.href = 'dashboard.html';
+    }
+  });
+</script>
+
+</body>
+</html>
